@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Name="root"
+             x:Class="Ample.Views.Tabs.LocalTab"
+             xmlns:tabs="clr-namespace:Ample.ViewModels.Tabs"
+             xmlns:models="clr-namespace:Ample.Models"
+             
+             xmlns:xe="clr-namespace:XamEffects;assembly=XamEffects">
+    <d:ContentView.BindingContext>
+        <tabs:LocalTabModel/>
+    </d:ContentView.BindingContext>
+
+    <ContentView.Resources>
+        <Style TargetType="Button" x:Key="NavPlayer">
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="BackgroundColor" Value="#222"/>
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+    </ContentView.Resources>
+
+    <AbsoluteLayout BackgroundColor="#333">
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="SizeProportional">
+            <ListView
+                HasUnevenRows="True"
+                SeparatorVisibility="Default"
+                SelectionMode="None"
+                ItemsSource="{Binding Playlist}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="15,5" RowSpacing="0">
+                                <Grid.Triggers>
+                                    <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="Green"/>
+                                    </DataTrigger>
+                                </Grid.Triggers>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.CommandSelected, Source={Reference root}}"
+                                                          CommandParameter="{Binding .}"/>
+                                </Grid.GestureRecognizers>
+                                <d:Grid.BindingContext>
+                                    <models:Track/>
+                                </d:Grid.BindingContext>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="70*"/>
+                                    <ColumnDefinition Width="20*"/>
+                                    <ColumnDefinition Width="10*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!--Title-->
+                                <Label Grid.Row="0"
+                                       Grid.Column="0"
+                                       TextColor="White">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding PositionId}"/>
+                                            <Span Text=" "/>
+                                            <Span Text="{Binding AuthorName}"/>
+                                            <Span Text=" - "/>
+                                            <Span Text="{Binding TrackName}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <!--Meta data-->
+                                <Label Grid.Row="1"
+                                       Grid.Column="0"
+                                       TextColor="Gray">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding PositionId}"/>
+                                            <Span Text=" "/>
+                                            <Span Text="{Binding AuthorName}"/>
+                                            <Span Text=" - "/>
+                                            <Span Text="{Binding TrackName}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <!--Length-->
+                                <Label Grid.RowSpan="2"
+                                       Grid.Column="1"
+                                       HorizontalOptions="EndAndExpand"
+                                       Margin="0,0,10,0"
+                                       TextColor="White">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Length}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <Button 
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    Text="P"/>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout Orientation="Horizontal" BackgroundColor="#323639" Padding="10">
+                <Button Text="Add" HorizontalOptions="Start"/>
+                <Button Text="Remove" HorizontalOptions="Start"/>
+            </StackLayout>
+        </StackLayout>
+    </AbsoluteLayout>
+</ContentView>

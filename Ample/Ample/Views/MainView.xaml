@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Ample.ViewModels"
+             mc:Ignorable="d"
+             
+             xmlns:tvs="clr-namespace:Xam.Plugin.TabView;assembly=Xam.Plugin.TabView"
+             xmlns:tabs="clr-namespace:Ample.Views.Tabs"
+             
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Ample.Views.MainView">
+    <d:ContentPage.BindingContext>
+        <vm:MainVm/>
+    </d:ContentPage.BindingContext>
+    
+    <StackLayout>
+        <tvs:TabViewControl 
+            x:Name="FuckDevs"
+            HeaderBackgroundColor="#323639"
+            VerticalOptions="FillAndExpand"
+            HeaderSelectionUnderlineColor="ForestGreen"/>
+    </StackLayout>
+
+</ContentPage>
