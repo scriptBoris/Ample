@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Text;
 using Xamarin.Forms;
 
-namespace Ample.Controls.Converters
+namespace Ample.Core.Converters
 {
     public class ListIsEmpty : IValueConverter
     {

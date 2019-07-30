@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Ample.Core
@@ -83,6 +84,13 @@ namespace Ample.Core
                 OnPropertychanged(nameof(Orientation));
                 OnOrientationChanged(Orientation);
             }
+        }
+        #endregion
+
+        #region public methods
+        public async Task ShowMessage(string body, string title, string ok = "OK")
+        {
+            await View.DisplayAlert(title, body, ok);
         }
         #endregion
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace Ample.Controls.Behaviors
+namespace Ample.Core.Behaviors
 {
     public class DeselectItemBehaviour : Behavior<ListView>
     {

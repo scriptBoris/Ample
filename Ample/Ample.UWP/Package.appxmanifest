@@ -1,21 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Package
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
+  IgnorableNamespaces="rescap">
 
   <Identity
-    Name="fb667a4e-628f-4a2e-bdea-d9454e962390"
+    Name="Ample"
     Publisher="CN=005d0614-063c-4a01-a79c-d2f76c3201e6"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="ec0cc741-fd3e-485c-81be-68815c480690" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>helicat.Ample</DisplayName>
-    <PublisherDisplayName>005d0614-063c-4a01-a79c-d2f76c3201e6</PublisherDisplayName>
+    <DisplayName>helicat.ample</DisplayName>
+    <PublisherDisplayName>Helicat</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -54,5 +55,6 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
+    <rescap:Capability Name="broadFileSystemAccess"/>
   </Capabilities>
 </Package>

@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:convert="clr-namespace:Ample.Controls.Converters"
+             xmlns:core="clr-namespace:Ample.Core.Converters"
              mc:Ignorable="d"
              x:Class="Ample.App">
     <Application.Resources>
-        <convert:ListIsEmpty x:Key="ListIsEmpty"/>
-        <convert:ListIsNotEmpty x:Key="ListIsNotEmpty"/>
+        <core:ListIsEmpty x:Key="ListIsEmpty"/>
+        <core:ListIsNotEmpty x:Key="ListIsNotEmpty"/>
     </Application.Resources>
 </Application>

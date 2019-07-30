@@ -7,7 +7,7 @@ using System.Text;
 using Xam.Plugin.TabView;
 using Xamarin.Forms;
 
-namespace Ample.Controls.Converters
+namespace Ample.Core.Converters
 {
     public class ListIsNotEmpty : IValueConverter
     {

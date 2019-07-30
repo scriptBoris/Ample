@@ -110,7 +110,10 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackLayout Orientation="Horizontal" BackgroundColor="#323639" Padding="10">
-                <Button Text="Add" HorizontalOptions="Start"/>
+                <!--Add files-->
+                <Button Text="Add" HorizontalOptions="Start"
+                        Command="{Binding CommandAddFiles}"/>
+                
                 <Button Text="Remove" HorizontalOptions="Start"/>
             </StackLayout>
         </StackLayout>

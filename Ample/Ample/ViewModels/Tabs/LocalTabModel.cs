@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using Xam.Plugin.TabView;
+using Xamarin.Forms;
 
 namespace Ample.ViewModels.Tabs
 {
@@ -15,6 +17,7 @@ namespace Ample.ViewModels.Tabs
         private Track selectedTrack;
 
         public SimpleCommand CommandSelected { get; set; }
+        public LockCommand CommandAddFiles { get; set; }
 
         public ObservableCollection<Track> Playlist { get; set; }
 
@@ -24,6 +27,9 @@ namespace Ample.ViewModels.Tabs
         public LocalTabModel(BaseViewModel parrent) : base(parrent)
         {
             CommandSelected = new SimpleCommand(ActionSelectedTrack);
+            CommandAddFiles = new LockCommand(parrent, ActionLoadFiles);
+
+            //TODO Test
             Playlist = new ObservableCollection<Track>
             {
                 new Track
@@ -66,6 +72,21 @@ namespace Ample.ViewModels.Tabs
             if (latestTrack != null)
                 latestTrack.IsSelected = false;
             latestTrack = selectedTrack;
+        }
+
+        private async Task ActionLoadFiles()
+        {
+            var res = await DependencyService.Get<ICrossPlatform>().AddTracks();
+
+            if (res != null)
+            {
+                string body = "";
+                foreach (var item in res)
+                {
+                    body += item.AbsolutePath + "\n";
+                }
+                await ParentVm.ShowMessage(body, "Успех");
+            }
         }
     }
 }
