@@ -1,11 +1,13 @@
 ﻿using Ample.Core;
 using Ample.Models;
+using Plugin.SimpleAudioPlayer;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(Ample.UWP.Platform.CrossPlatform))]
@@ -13,6 +15,8 @@ namespace Ample.UWP.Platform
 {
     public class CrossPlatform : ICrossPlatform
     {
+        private static ISimpleAudioPlayer player = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
+
         public async Task<List<Track>> AddTracks()
         {
             var folderPicker = new Windows.Storage.Pickers.FolderPicker();
@@ -30,9 +34,8 @@ namespace Ample.UWP.Platform
                 res.Add(new Track
                 {
                     FileName = file.Name,
-                    AuthorName = "unknown",
-                    TrackName = "unknown",
                     AbsolutePath = file.Path,
+                    FileExtension = Path.GetExtension(file.Path),
                 });
             }
 
@@ -40,6 +43,24 @@ namespace Ample.UWP.Platform
             // (including other sub-folder contents)
             Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", folder);
             return res;
+        }
+
+        public async void Play(string pathFile)
+        {
+            var file = await StorageFile.GetFileFromPathAsync(pathFile);
+
+            player.Load(await file.OpenStreamForReadAsync());
+            player.Play();
+        }
+
+        public void Pause()
+        {
+            player.Pause();
+        }
+
+        public void Resume()
+        {
+            player.Play();
         }
     }
 }

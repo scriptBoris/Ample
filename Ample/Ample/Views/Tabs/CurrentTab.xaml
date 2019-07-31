@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              x:Class="Ample.Views.Tabs.CurrentTab"
              xmlns:tabs="clr-namespace:Ample.ViewModels.Tabs"
+             xmlns:enums="clr-namespace:Ample.Models.Enums"
              >
     <d:ContentView.BindingContext>
         <tabs:CurrentTabModel/>
@@ -36,10 +37,18 @@
             </Grid.ColumnDefinitions>
             
             <!--Label-->
-            <BoxView 
+            <AbsoluteLayout 
                 Grid.ColumnSpan="3"
-                Grid.Row="0"
-                BackgroundColor="Accent"/>
+                Grid.Row="0">
+                <BoxView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         AbsoluteLayout.LayoutFlags="SizeProportional"
+                         BackgroundColor="Accent"/>
+                
+                <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,AutoSize"
+                             AbsoluteLayout.LayoutFlags="WidthProportional">
+                    <Label Text="{Binding PlayingTrack.TitleView}"/>
+                </StackLayout>
+            </AbsoluteLayout>
             <!--Progress bar-->
             <StackLayout
                 BackgroundColor="#333"
@@ -58,13 +67,30 @@
                 Style="{StaticResource NavPlayer}"
                 Text="Back"/>
 
-            <!--Play Pause-->
+            <!--Play/Pause-->
             <Button
                 Grid.Column="1"
                 Grid.Row="2"
                 Style="{StaticResource NavPlayer}"
-                Text="Play"/>
-            
+                Command="{Binding CommandPlayPause}">
+                <Button.Triggers>
+                    <!--Started-->
+                    <DataTrigger TargetType="Button" Binding="{Binding PlayerStatus}" Value="{x:Static enums:PlayerStatus.Started}">
+                        <Setter Property="Text" Value="Play"/>
+                    </DataTrigger>
+                    
+                    <!--Playing-->
+                    <DataTrigger TargetType="Button" Binding="{Binding PlayerStatus}" Value="{x:Static enums:PlayerStatus.Playing}">
+                        <Setter Property="Text" Value="Play"/>
+                    </DataTrigger>
+
+                    <!--Pause-->
+                    <DataTrigger TargetType="Button" Binding="{Binding PlayerStatus}" Value="{x:Static enums:PlayerStatus.Pause}">
+                        <Setter Property="Text" Value="Pause"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
             <!--Next-->
             <Button
                 Grid.Column="2"

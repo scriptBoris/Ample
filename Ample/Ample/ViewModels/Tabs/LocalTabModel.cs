@@ -17,49 +17,26 @@ namespace Ample.ViewModels.Tabs
         private Track selectedTrack;
 
         public SimpleCommand CommandSelected { get; set; }
+        public LockCommand CommandTapItem { get; set; }
         public LockCommand CommandAddFiles { get; set; }
 
-        public ObservableCollection<Track> Playlist { get; set; }
+        public ObservableCollection<Track> Playlist { get; set; } = new ObservableCollection<Track>();
 
         public override TabItem Tab { get; set; } = new TabItem("Local", new LocalTab());
         [Obsolete("Only XAML intellisense")]
         public LocalTabModel() { }
-        public LocalTabModel(BaseViewModel parrent) : base(parrent)
+        public LocalTabModel(BaseViewModel parent) : base(parent)
         {
             CommandSelected = new SimpleCommand(ActionSelectedTrack);
-            CommandAddFiles = new LockCommand(parrent, ActionLoadFiles);
+            CommandTapItem = new LockCommand(parent, ActionTapItem);
+            CommandAddFiles = new LockCommand(parent, ActionLoadFiles);
+        }
 
-            //TODO Test
-            Playlist = new ObservableCollection<Track>
-            {
-                new Track
-                {
-                    AbsolutePath = "D:/Media/Music/AzazinKreet - Rating.mp3",
-                    AuthorName = "Azazin Kreet",
-                    FileName = "AzazinKreet - Rating.mp3",
-                    TrackName = "Rating",
-                    Length = 3.39m,
-                    PositionId = 1,
-                },
-                new Track
-                {
-                    AbsolutePath = "D:/Media/Music/AzazinKreet - Rating.mp3",
-                    AuthorName = "Azazin Kreet",
-                    FileName = "AzazinKreet - Rating.mp3",
-                    TrackName = "Rating",
-                    Length = 3.39m,
-                    PositionId = 2,
-                },
-                new Track
-                {
-                    AbsolutePath = "D:/Media/Music/AzazinKreet - Rating.mp3",
-                    AuthorName = "Azazin Kreet",
-                    FileName = "AzazinKreet - Rating.mp3",
-                    TrackName = "Rating",
-                    Length = 3.39m,
-                    PositionId = 3,
-                },
-            };
+        private void ActionTapItem(object obj)
+        {
+            var tapTrack = (Track)obj;
+
+            AppServices.Player.Play(tapTrack);
         }
 
         private void ActionSelectedTrack(object obj)
@@ -72,6 +49,8 @@ namespace Ample.ViewModels.Tabs
             if (latestTrack != null)
                 latestTrack.IsSelected = false;
             latestTrack = selectedTrack;
+
+            AppServices.Player.SelectTrack(selectedTrack);
         }
 
         private async Task ActionLoadFiles()

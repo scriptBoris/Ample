@@ -24,6 +24,12 @@ namespace Ample.ViewModels
             RealView.CodeBehindRetards.AddTab(current.Tab);
             RealView.CodeBehindRetards.AddTab(local.Tab);
             RealView.CodeBehindRetards.AddTab(cloud.Tab);
+
+            // init app map
+            AppMap.MainVm = this;
+            AppMap.Cloudlist = cloud;
+            AppMap.PlayerTab = current;
+            AppMap.Playlist = local;
         }
     }
 }

@@ -29,6 +29,7 @@
             <ListView
                 HasUnevenRows="True"
                 SeparatorVisibility="Default"
+                CachingStrategy="RecycleElement"
                 SelectionMode="None"
                 ItemsSource="{Binding Playlist}">
                 <ListView.ItemTemplate>
@@ -65,9 +66,7 @@
                                         <FormattedString>
                                             <Span Text="{Binding PositionId}"/>
                                             <Span Text=" "/>
-                                            <Span Text="{Binding AuthorName}"/>
-                                            <Span Text=" - "/>
-                                            <Span Text="{Binding TrackName}"/>
+                                            <Span Text="{Binding TitleView}"/>
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
