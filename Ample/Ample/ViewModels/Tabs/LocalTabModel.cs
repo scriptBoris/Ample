@@ -77,16 +77,16 @@ namespace Ample.ViewModels.Tabs
         private async Task ActionLoadFiles()
         {
             var res = await DependencyService.Get<ICrossPlatform>().AddTracks();
+            if (res == null)
+                return;
 
-            if (res != null)
+            ParentVm.IsLoading = true;
+            foreach (var item in res)
             {
-                string body = "";
-                foreach (var item in res)
-                {
-                    body += item.AbsolutePath + "\n";
-                }
-                await ParentVm.ShowMessage(body, "Успех");
+                Playlist.Add(item);
+                item.PositionId = Playlist.Count;
             }
+            ParentVm.IsLoading = false;
         }
     }
 }

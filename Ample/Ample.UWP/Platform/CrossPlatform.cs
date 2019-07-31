@@ -29,6 +29,9 @@ namespace Ample.UWP.Platform
             {
                 res.Add(new Track
                 {
+                    FileName = file.Name,
+                    AuthorName = "unknown",
+                    TrackName = "unknown",
                     AbsolutePath = file.Path,
                 });
             }

@@ -15,7 +15,7 @@ namespace Ample.Views
     [DesignTimeVisible(false)]
     public partial class MainView : ContentPage
     {
-        public TabViewControl CodeBehindRetards => FuckDevs;
+        public TabViewControl CodeBehindRetards => codeBehindRetards;
         public MainView()
         {
             InitializeComponent();

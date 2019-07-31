@@ -17,7 +17,7 @@
     
     <StackLayout>
         <tvs:TabViewControl 
-            x:Name="FuckDevs"
+            x:Name="codeBehindRetards"
             HeaderBackgroundColor="#323639"
             VerticalOptions="FillAndExpand"
             HeaderSelectionUnderlineColor="ForestGreen"/>

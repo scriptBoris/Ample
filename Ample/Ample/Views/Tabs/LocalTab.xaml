@@ -77,11 +77,11 @@
                                        TextColor="Gray">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span Text="{Binding PositionId}"/>
+                                            <Span Text="320 Kbit"/>
                                             <Span Text=" "/>
-                                            <Span Text="{Binding AuthorName}"/>
-                                            <Span Text=" - "/>
-                                            <Span Text="{Binding TrackName}"/>
+                                            <Span Text="Stereo"/>
+                                            <Span Text=" "/>
+                                            <Span Text="2 channel"/>
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
