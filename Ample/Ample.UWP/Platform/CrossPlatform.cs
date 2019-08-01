@@ -17,6 +17,11 @@ namespace Ample.UWP.Platform
     {
         private static ISimpleAudioPlayer player = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
 
+        public void Echo(string msg)
+        {
+
+        }
+
         public async Task<List<Track>> AddTracks()
         {
             var folderPicker = new Windows.Storage.Pickers.FolderPicker();

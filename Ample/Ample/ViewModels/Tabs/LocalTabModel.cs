@@ -57,7 +57,11 @@ namespace Ample.ViewModels.Tabs
         {
             var res = await DependencyService.Get<ICrossPlatform>().AddTracks();
             if (res == null)
+            {
+                DependencyService.Get<ICrossPlatform>().Echo("list null");
                 return;
+            }
+            DependencyService.Get<ICrossPlatform>().Echo("has list");
 
             ParentVm.IsLoading = true;
             foreach (var item in res)

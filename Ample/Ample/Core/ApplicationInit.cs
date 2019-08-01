@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace Ample.Core
 {
-    internal static class ApplicationInit
+    internal static class AppInit
     {
         internal static void EntryPointAfter()
         {

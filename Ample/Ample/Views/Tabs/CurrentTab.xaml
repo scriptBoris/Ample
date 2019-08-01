@@ -64,6 +64,7 @@
             <Button
                 Grid.Column="0"
                 Grid.Row="2"
+                Command="{Binding CommandBack}"
                 Style="{StaticResource NavPlayer}"
                 Text="Back"/>
 
@@ -71,8 +72,8 @@
             <Button
                 Grid.Column="1"
                 Grid.Row="2"
-                Style="{StaticResource NavPlayer}"
-                Command="{Binding CommandPlayPause}">
+                Command="{Binding CommandPlayPause}"
+                Style="{StaticResource NavPlayer}">
                 <Button.Triggers>
                     <!--Started-->
                     <DataTrigger TargetType="Button" Binding="{Binding PlayerStatus}" Value="{x:Static enums:PlayerStatus.Started}">
@@ -81,12 +82,12 @@
                     
                     <!--Playing-->
                     <DataTrigger TargetType="Button" Binding="{Binding PlayerStatus}" Value="{x:Static enums:PlayerStatus.Playing}">
-                        <Setter Property="Text" Value="Play"/>
+                        <Setter Property="Text" Value="Pause"/>
                     </DataTrigger>
 
                     <!--Pause-->
                     <DataTrigger TargetType="Button" Binding="{Binding PlayerStatus}" Value="{x:Static enums:PlayerStatus.Pause}">
-                        <Setter Property="Text" Value="Pause"/>
+                        <Setter Property="Text" Value="Play"/>
                     </DataTrigger>
                 </Button.Triggers>
             </Button>
@@ -95,6 +96,7 @@
             <Button
                 Grid.Column="2"
                 Grid.Row="2"
+                Command="{Binding CommandNext}"
                 Style="{StaticResource NavPlayer}"
                 Text="Next"/>
         </Grid>

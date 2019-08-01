@@ -8,6 +8,8 @@ namespace Ample.Core
 {
     public interface ICrossPlatform
     {
+        void Echo(string msg);
+
         void Play(string pathFile);
 
         void Resume();

@@ -16,13 +16,27 @@ namespace Ample.ViewModels.Tabs
         public PlayerStatus PlayerStatus { get; set; } = PlayerStatus.Started;
 
         public LockCommand CommandPlayPause { get; set; }
+        public LockCommand CommandNext { get; set; }
+        public LockCommand CommandBack { get; set; }
 
         public override TabItem Tab { get; set; } = new TabItem("Current", new CurrentTab());
         [Obsolete("Only XAML intellisense")]
         public CurrentTabModel() { }
-        public CurrentTabModel(BaseViewModel parrent) : base(parrent)
+        public CurrentTabModel(BaseViewModel parent) : base(parent)
         {
-            CommandPlayPause = new LockCommand(parrent, ActionPlayPause);
+            CommandPlayPause = new LockCommand(parent, ActionPlayPause);
+            CommandNext = new LockCommand(parent, ActionNext);
+            CommandBack = new LockCommand(parent, ActionBack);
+        }
+
+        private void ActionNext()
+        {
+            AppServices.Player.PlayNext();
+        }
+
+        private void ActionBack()
+        {
+            AppServices.Player.PlayBack();
         }
 
         private void ActionPlayPause()

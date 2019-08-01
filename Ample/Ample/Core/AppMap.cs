@@ -10,7 +10,7 @@ namespace Ample.Core
     {
         public static MainVm MainVm { get; set; }
         public static CurrentTabModel PlayerTab { get; set; }
-        public static LocalTabModel Playlist { get; set; }
-        public static CloudTabModel Cloudlist { get; set; }
+        public static LocalTabModel PlaylistTab { get; set; }
+        public static CloudTabModel CloudlistTab { get; set; }
     }
 }

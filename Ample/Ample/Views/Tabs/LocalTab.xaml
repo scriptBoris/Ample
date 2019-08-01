@@ -65,7 +65,7 @@
                                     <Label.FormattedText>
                                         <FormattedString>
                                             <Span Text="{Binding PositionId}"/>
-                                            <Span Text=" "/>
+                                            <Span Text=". "/>
                                             <Span Text="{Binding TitleView}"/>
                                         </FormattedString>
                                     </Label.FormattedText>

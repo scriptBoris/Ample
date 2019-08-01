@@ -27,9 +27,9 @@ namespace Ample.ViewModels
 
             // init app map
             AppMap.MainVm = this;
-            AppMap.Cloudlist = cloud;
+            AppMap.CloudlistTab = cloud;
             AppMap.PlayerTab = current;
-            AppMap.Playlist = local;
+            AppMap.PlaylistTab = local;
         }
     }
 }

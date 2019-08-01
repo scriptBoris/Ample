@@ -17,7 +17,7 @@ namespace Ample
             #endif
             InitializeComponent();
 
-            ApplicationInit.EntryPointAfter();
+            AppInit.EntryPointAfter();
         }
 
         protected override void OnStart()
