@@ -3,11 +3,68 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Ample.ViewModels.Tabs"
              mc:Ignorable="d"
              x:Class="Ample.Views.Tabs.CloudTab">
-  <ContentView.Content>
-      <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
-  </ContentView.Content>
+
+    <d:ContentView.BindingContext>
+        <vm:CloudTabModel/>
+    </d:ContentView.BindingContext>
+
+    <AbsoluteLayout BackgroundColor="#333">
+        <!--Client list-->
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="SizeProportional"
+                     IsVisible="False">
+            <Label Text="Hello Xamarin.Forms!" />
+        </StackLayout>
+
+        <!--Idle-->
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="SizeProportional"
+                     Padding="20">
+            <Grid VerticalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="33*"/>
+                    <RowDefinition Height="33*"/>
+                    <RowDefinition Height="33*"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0"
+                       Text="Вы можете присоедениться к серверу или самим стать сервером" 
+                       TextColor="White"
+                       FontSize="24"
+                       Margin="5"/>
+                <StackLayout Grid.Row="1">
+                    <Button Text="Connect"
+                            FontSize="20"/>
+                    <Button Text="Start server"
+                            FontSize="20"/>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+        
+        <!--Connect dialog-->
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="SizeProportional"
+                     BackgroundColor="#B000"
+                     IsVisible="True">
+            <Frame VerticalOptions="CenterAndExpand"
+                   CornerRadius="15"
+                   Margin="20,0">
+                <StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Entry HorizontalOptions="FillAndExpand"/>
+                        <Button Text="Connect"/>
+                    </StackLayout>
+                    <Button Text="Auto find"/>
+                    <Label Text="Favorites servers"/>
+                    <Label Text="Home - http://helicat.ru"/>
+                    <Label Text="Cloud - http://vk.com/id854895"/>
+
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </AbsoluteLayout>
 </ContentView>

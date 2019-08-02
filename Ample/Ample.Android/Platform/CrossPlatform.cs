@@ -7,6 +7,7 @@ using Ample.Core;
 using Ample.Models;
 using Android.App;
 using Android.Content;
+using Android.Media;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -19,6 +20,7 @@ namespace Ample.Droid.Platform
 {
     public class CrossPlatform : ICrossPlatform
     {
+        private MediaPlayer player;
         public static readonly int PickFolderId = 1337;
 
         public void Echo(string msg)
@@ -47,8 +49,18 @@ namespace Ample.Droid.Platform
         {
         }
 
-        public void Play(string pathFile)
+        public void Play(string pathFile, object alternative)
         {
+            if (player == null)
+            {
+                player = new MediaPlayer();
+            }
+
+            var uri = (Android.Net.Uri)alternative;
+            
+            player.SetDataSource(MainActivity.Instance, uri);
+            player.Prepare();
+            player.Start();
         }
 
         public void Resume()

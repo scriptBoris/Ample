@@ -45,8 +45,11 @@
                          BackgroundColor="Accent"/>
                 
                 <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,AutoSize"
-                             AbsoluteLayout.LayoutFlags="WidthProportional">
-                    <Label Text="{Binding PlayingTrack.TitleView}"/>
+                             AbsoluteLayout.LayoutFlags="WidthProportional"
+                             Padding="10"
+                             BackgroundColor="#9000">
+                    <Label Text="{Binding PlayingTrack.TitleView}"
+                           TextColor="White"/>
                 </StackLayout>
             </AbsoluteLayout>
             <!--Progress bar-->

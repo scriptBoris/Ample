@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using Ample.Models;
 using Ample.Droid.Platform;
 using Ample.Droid.Support;
-using System.IO;
 using Android.Provider;
 using Android.Net;
+using Android.Database;
 
 namespace Ample.Droid
 {
@@ -28,8 +28,6 @@ namespace Ample.Droid
         ]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        private Android.Net.Uri mCurrentDirectoryUri;
-
         internal static MainActivity Instance { get; private set; }
         public TaskCompletionSource<List<Track>> PickFolderTaskCompletionSource { get; set; }
 
@@ -70,35 +68,6 @@ namespace Ample.Droid
                 {
                     var uri = intent.Data;
                     PickFolderTaskCompletionSource.SetResult(UpdateDirectoryEntries(uri));
-                    //string path = GetPathFromUri.GetActualPathFromFile(uri, this);
-                    //var res = new List<Track>();
-
-                    ////
-                    ////var folder = Android.OS.Environment.ExternalStorageDirectory + Java.IO.File.Separator + "yourfoldername";
-                    ////if (!Directory.Exists(folder))
-                    ////    Directory.CreateDirectory(folder);
-
-                    ////var filesList = Directory.GetFiles(folder);
-                    ////foreach (var file in filesList)
-                    ////{
-                    ////    var filename = Path.GetFileName(file);
-                    ////}
-                    ////
-
-                    //var files = Directory.EnumerateFiles(path);
-                    //foreach (var file in files)
-                    //{
-                    //    string fileName = Path.GetFileName(file);
-                    //    string extension = Path.GetExtension(file);
-                    //    res.Add(new Track
-                    //    {
-                    //        AbsolutePath = file,
-                    //        FileName = fileName,
-                    //        FileExtension = extension,
-                    //    });
-                    //}
-
-                    //PickFolderTaskCompletionSource.SetResult(res);
                 }
                 else
                 {
@@ -110,47 +79,45 @@ namespace Ample.Droid
         private List<Track> UpdateDirectoryEntries(Android.Net.Uri uri)
         {
             var contentResolver = Instance.ContentResolver;
-            var docUri = DocumentsContract.BuildDocumentUriUsingTree(uri, DocumentsContract.GetTreeDocumentId(uri));
             var childrenUri = DocumentsContract.BuildChildDocumentsUriUsingTree(uri, DocumentsContract.GetTreeDocumentId(uri));
 
-            var docCursor = contentResolver.Query(docUri, new[] {
-                DocumentsContract.Document.ColumnDisplayName,
-                DocumentsContract.Document.ColumnMimeType
-            }, null, null, null);
-            try
-            {
-                while (docCursor.MoveToNext())
-                {
-                    string name = docCursor.GetString(0);
-                    mCurrentDirectoryUri = uri;
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-            var childCursor = contentResolver.Query(childrenUri, new[] {
+            string[] projection = {
+                MediaStore.Audio.AudioColumns.Data,
+                MediaStore.Audio.AudioColumns.Title,
+                MediaStore.Audio.AudioColumns.Album,
+                MediaStore.Audio.ArtistColumns.Artist,
                 DocumentsContract.Document.ColumnDisplayName,
                 DocumentsContract.Document.ColumnMimeType,
                 DocumentsContract.Document.ColumnDocumentId,
-            }, null, null, null);
+            };
+
+            var childCursor = contentResolver.Query(childrenUri, projection, MediaStore.Audio.AudioColumns.Data + " like ? ", new String[] { "%utm%" }, null);
 
             try
             {
                 var findTracks = new List<Track>();
                 while (childCursor.MoveToNext())
                 {
-                    string file = childCursor.GetString(0);
-                    string mimeType = childCursor.GetString(1);
-                    string id = childCursor.GetString(2);
+                    string path = childCursor.GetString(0);
+                    string title = childCursor.GetString(1);
+                    string album = childCursor.GetString(2);
+                    string artist = childCursor.GetString(3);
+                    string fileName = childCursor.GetString(4);
+                    string mime = childCursor.GetString(5);
+                    string docId = childCursor.GetString(6);
+                    var childUri = DocumentsContract.BuildChildDocumentsUriUsingTree(uri, docId);
+                    //var childUri = DocumentsContract.Bui(childrenUri, docId);
 
-                    if (mimeType.Contains("audio"))
+                    if (mime.Contains("audio"))
                     {
+                        var file = new Java.IO.File(childUri.Path);
+                        var split = file.Path.Split(":");
+                        path = split[1];
+
                         var track = new Track
                         {
-                            FileName = file,
-                            AbsolutePath = GetRealPathFromURI(id)
+                            FileName = fileName,
+                            AlternativePathObject = childUri,//path + Java.IO.File.Separator + fileName,
                         };
                         findTracks.Add(track);
                     }
@@ -162,16 +129,6 @@ namespace Ample.Droid
             {
                 return null;
             }
-        }
-
-        private string GetRealPathFromURI(string docId)
-        {
-            var cursor = ContentResolver.Query(MediaStore.Audio.Media.ExternalContentUri, null, MediaStore.Audio.Media.DATA + " like ? ", new[] { docId }, null);
-            cursor.MoveToFirst();
-            string path = cursor.GetString(cursor.GetColumnIndex(Android.Provider.MediaStore.Audio.AudioColumns.Data));
-            cursor.Close();
-
-            return path;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Ample.Service
 
             if (PlayingTrack != null)
             {
-                DependencyService.Get<ICrossPlatform>().Play(PlayingTrack.AbsolutePath);
+                DependencyService.Get<ICrossPlatform>().Play(PlayingTrack.AbsolutePath, PlayingTrack.AlternativePathObject);
                 AppMap.PlayerTab.PlayerStatus = PlayerStatus.Playing;
                 AppMap.PlayerTab.OnPropertychanged(nameof(AppMap.PlayerTab.PlayingTrack));
             }
@@ -42,7 +42,7 @@ namespace Ample.Service
         {
             PlayingTrack = track;
 
-            DependencyService.Get<ICrossPlatform>().Play(PlayingTrack.AbsolutePath);
+            DependencyService.Get<ICrossPlatform>().Play(PlayingTrack.AbsolutePath, PlayingTrack.AlternativePathObject);
             AppMap.PlayerTab.PlayerStatus = PlayerStatus.Playing;
             AppMap.PlayerTab.OnPropertychanged(nameof(AppMap.PlayerTab.PlayingTrack));
         }

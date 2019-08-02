@@ -41,6 +41,11 @@ namespace Ample.Models
         #region Data
 
         /// <summary>
+        /// Альтернативное представление пути до файла
+        /// </summary>
+        public object AlternativePathObject { get; set; }
+
+        /// <summary>
         /// Абсолютный путь файла
         /// </summary>
         public string AbsolutePath { get; set; }

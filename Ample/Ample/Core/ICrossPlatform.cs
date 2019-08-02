@@ -10,7 +10,7 @@ namespace Ample.Core
     {
         void Echo(string msg);
 
-        void Play(string pathFile);
+        void Play(string pathFile, object alternative);
 
         void Resume();
 

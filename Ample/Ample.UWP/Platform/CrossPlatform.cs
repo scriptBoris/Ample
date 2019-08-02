@@ -50,7 +50,7 @@ namespace Ample.UWP.Platform
             return res;
         }
 
-        public async void Play(string pathFile)
+        public async void Play(string pathFile, object alternative = null)
         {
             var file = await StorageFile.GetFileFromPathAsync(pathFile);
 
