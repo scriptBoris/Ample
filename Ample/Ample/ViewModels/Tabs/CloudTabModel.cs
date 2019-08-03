@@ -13,6 +13,7 @@ namespace Ample.ViewModels.Tabs
 {
     public class CloudTabModel : BaseTabModel
     {
+        public bool IsLoading { get; set; }
         public CloudTabStatus Status { get; set; } = CloudTabStatus.Idle;
         public ObservableCollection<Track> CloudList { get; set; } = new ObservableCollection<Track>();
         public ObservableCollection<string> Clients { get; set; } = new ObservableCollection<string>();
@@ -21,6 +22,7 @@ namespace Ample.ViewModels.Tabs
         public SimpleCommand CommandSelectConnect { get; set; }
         public LockCommand CommandStartServer { get; set; }
 
+        public string ConnectHost { get; set; }
         public LockCommand CommandConnect { get; set; }
         public LockCommand CommandAutoFind { get; set; }
         public LockCommand CommandSync { get; set; }
@@ -34,6 +36,7 @@ namespace Ample.ViewModels.Tabs
         {
             CommandSelectConnect = new SimpleCommand(ActionSelectConnect);
             CommandStartServer = new LockCommand(parent, ActionStartServer);
+            CommandConnect = new LockCommand(parent, ActionConnect);
         }
 
         private void ActionStartServer()
@@ -45,6 +48,21 @@ namespace Ample.ViewModels.Tabs
         private void ActionSelectConnect()
         {
             Status = CloudTabStatus.ConnectDialog;
+        }
+
+        private async Task ActionConnect()
+        {
+            IsLoading = true;
+            var res = await AppServices.Client.Connect(ConnectHost);
+            if (res == false)
+            {
+                await ParentVm.ShowMessage($"Не удалось подключиться к серверу {ConnectHost}", "Ошибка");
+                IsLoading = false;
+                return;
+            }
+
+            Status = CloudTabStatus.ClientMode;
+            IsLoading = false;
         }
     }
 }

@@ -4,6 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Ample.ViewModels.Tabs"
+             xmlns:enums="clr-namespace:Ample.Models.Enums"
+             xmlns:renderes="clr-namespace:Ample.Core.Renderers"
              mc:Ignorable="d"
              x:Class="Ample.Views.Tabs.CloudTab">
 
@@ -12,17 +14,61 @@
     </d:ContentView.BindingContext>
 
     <AbsoluteLayout BackgroundColor="#333">
-        <!--Client list-->
+        <!--Client mode-->
         <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
                      AbsoluteLayout.LayoutFlags="SizeProportional"
                      IsVisible="False">
-            <Label Text="Hello Xamarin.Forms!" />
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout" Binding="{Binding Status}" Value="{x:Static enums:CloudTabStatus.ClientMode}">
+                    <Setter Property="IsVisible" Value="True"/>
+                </DataTrigger>
+            </StackLayout.Triggers>
+
+            <Label Text="Connect is instablished" 
+                   TextColor="White"
+                   FontSize="24"
+                   Margin="20"/>
+
+        </StackLayout>
+        
+        <!--Server mode-->
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="SizeProportional"
+                     IsVisible="False">
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout" Binding="{Binding Status}" Value="{x:Static enums:CloudTabStatus.ServerMode}">
+                    <Setter Property="IsVisible" Value="True"/>
+                </DataTrigger>
+            </StackLayout.Triggers>
+
+            <Label Grid.Row="0"
+                   Text="Server is running" 
+                   TextColor="White"
+                   FontSize="24"
+                   Margin="20"/>
+            
+            <Button Text="Stop"
+                    Margin="20"
+                    Command="{Binding CommandStopServer}"/>
+            <ListView ItemsSource="{Binding Clients}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding .}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
 
         <!--Idle-->
         <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
                      AbsoluteLayout.LayoutFlags="SizeProportional"
-                     Padding="20">
+                     Padding="20"
+                     IsVisible="False">
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout" Binding="{Binding Status}" Value="{x:Static enums:CloudTabStatus.Idle}">
+                    <Setter Property="IsVisible" Value="True"/>
+                </DataTrigger>
+            </StackLayout.Triggers>
             <Grid VerticalOptions="FillAndExpand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="33*"/>
@@ -37,9 +83,11 @@
                        Margin="5"/>
                 <StackLayout Grid.Row="1">
                     <Button Text="Connect"
-                            FontSize="20"/>
+                            FontSize="20"
+                            Command="{Binding CommandSelectConnect}"/>
                     <Button Text="Start server"
-                            FontSize="20"/>
+                            FontSize="20"
+                            Command="{Binding CommandStartServer}"/>
                 </StackLayout>
             </Grid>
         </StackLayout>
@@ -48,15 +96,22 @@
         <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
                      AbsoluteLayout.LayoutFlags="SizeProportional"
                      BackgroundColor="#B000"
-                     IsVisible="True">
+                     IsVisible="False">
+            <StackLayout.Triggers>
+                <DataTrigger TargetType="StackLayout" Binding="{Binding Status}" Value="{x:Static enums:CloudTabStatus.ConnectDialog}">
+                    <Setter Property="IsVisible" Value="True"/>
+                </DataTrigger>
+            </StackLayout.Triggers>
             <Frame VerticalOptions="CenterAndExpand"
                    CornerRadius="15"
                    Margin="20,0">
                 <StackLayout>
 
                     <StackLayout Orientation="Horizontal">
-                        <Entry HorizontalOptions="FillAndExpand"/>
-                        <Button Text="Connect"/>
+                        <Entry HorizontalOptions="FillAndExpand"
+                               Text="{Binding ConnectHost}"/>
+                        <Button Text="Connect"
+                                Command="{Binding CommandConnect}"/>
                     </StackLayout>
                     <Button Text="Auto find"/>
                     <Label Text="Favorites servers"/>
@@ -65,6 +120,18 @@
 
                 </StackLayout>
             </Frame>
+        </StackLayout>
+
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="SizeProportional"
+                     BackgroundColor="#9000"
+                     IsVisible="{Binding IsLoading}">
+            <!--<renderes:IndicatorRingExtended HeightRequest="64" WidthRequest="64"
+                                            VerticalOptions="CenterAndExpand"
+                                            HorizontalOptions="CenterAndExpand"/>-->
+            <ActivityIndicator IsRunning="True" HeightRequest="64" WidthRequest="64"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"/>
         </StackLayout>
     </AbsoluteLayout>
 </ContentView>

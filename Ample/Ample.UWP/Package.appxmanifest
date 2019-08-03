@@ -56,5 +56,7 @@
   <Capabilities>
     <Capability Name="internetClient" />
     <rescap:Capability Name="broadFileSystemAccess"/>
+    <Capability Name="internetClientServer"/>
+    <Capability Name="privateNetworkClientServer"/>
   </Capabilities>
 </Package>

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml.Controls;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(Ample.UWP.Platform.CrossPlatform))]
@@ -17,9 +18,15 @@ namespace Ample.UWP.Platform
     {
         private static ISimpleAudioPlayer player = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
 
-        public void Echo(string msg)
+        public async void Echo(string msg)
         {
-
+            var dialog = new ContentDialog
+            {
+                Title = "Echo",
+                Content = msg,
+                CloseButtonText = "OK",
+            };
+            await dialog.ShowAsync();
         }
 
         public async Task<List<Track>> AddTracks()
